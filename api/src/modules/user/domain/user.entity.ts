@@ -1,13 +1,12 @@
 export class User {
   constructor(
     public readonly id: number,
-    public readonly firstName: string,
-    public readonly lastName: string,
+    public readonly first_name: string,
+    public readonly last_name: string,
     public readonly phone: string,
     public readonly email: string,
-    public readonly password: string,
     public readonly activated: boolean,
-    public readonly roleId: number,
-    public readonly createdAt: Date
+    public readonly role_id: number,
+    public readonly created_at: Date
   ) {}
 }

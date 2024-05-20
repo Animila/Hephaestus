@@ -4,7 +4,7 @@ services:
     image: postgres:alpine3.18
     volumes:
       - ./database:/var/lib/postgresql/data
-    container_name: api.postgres
+    container_name: maindb
     environment:
       - POSTGRES_USER=${DEV_PG_DB_USER}
       - POSTGRES_PASSWORD=${DEV_PG_DB_PASS}
@@ -21,3 +21,47 @@ services:
       retries: 5
       start_period: 10s
     restart: always
+
+
+  api:
+    container_name: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - '${API_PORT}:${API_PORT}'
+    environment:
+      - DATABASE_URL=postgresql://${DEV_PG_DB_USER}:${DEV_PG_DB_PASS}@maindb:${DEV_PG_DB_PORT}/${DEV_PG_DATABASE}
+      - RABBITMQ_URI=amqp://localhost
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASS=${EMAIL_PASS}
+      - JWT_SECRET=${JWT_SECRET}
+      - PORT=${API_PORT}
+    command: >
+      sh -c "
+      yarn install &&
+      npx prisma generate &&
+      yarn start:prod
+      "
+    depends_on:
+      - maindb
+    env_file:
+      - .env
+
+  nginx:
+    image: macbre/nginx-brotli:1.19.6-http3
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+    ports:
+      - 80:80
+      - 443:443
+    container_name: nginx
+    expose:
+      - 443
+      - 80
+    environment:
+      NGINX_COMPRESS: 'brotli'
+    restart: always
+    depends_on:
+      - api

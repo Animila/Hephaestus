@@ -10,7 +10,7 @@ datasource db {
 
 model plans {
   id       Int        @id @default(autoincrement())
-  title    String
+  title    String     @unique
   scopes   Json // возможности
   price    Int // цены
   payments payments[]
@@ -22,7 +22,6 @@ model users {
   last_name  String
   phone      String
   email      String     @unique
-  password   String
   activated  Boolean    @default(false)
   role_id    Int
   roles      roles      @relation(fields: [role_id], references: [id])
@@ -34,7 +33,7 @@ model users {
 
 model roles {
   id    Int     @id @default(autoincrement())
-  title String
+  title String  @unique
   users users[]
 }
 
@@ -52,7 +51,7 @@ model cabinets {
   id         Int        @id @default(autoincrement())
   user_id    Int
   user       users      @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  title      String
+  title      String     @unique
   created_at DateTime   @default(now())
   supports   supports[]
 }
@@ -85,6 +84,6 @@ model tokens {
   number_code Int?
   is_valid    Boolean   @default(true)
   created_at  DateTime  @default(now())
-  used_at     DateTime?
+  expires_at  DateTime?
   users       users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }

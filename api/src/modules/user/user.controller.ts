@@ -10,8 +10,8 @@ export class UserController {
 
   @Post('register')
   @UsePipes(CreateValidationPipe)
-  async register(@Body() body: { firstName: string, lastName: string, phone: string, email: string, password: string, roleId: number }) {
-    return this.userService.register(body.firstName, body.lastName, body.phone, body.email, body.password, body.roleId);
+  async register(@Body() body: { firstName: string, lastName: string, phone: string, email: string, roleId: number }) {
+    return this.userService.register(body.firstName, body.lastName, body.phone, body.email, body.roleId);
   }
 
   @UseGuards(JwtAuthGuard)

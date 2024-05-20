@@ -2,5 +2,6 @@ import { User } from './user.entity';
 
 export interface UserRepository {
   findByEmail(email: string): Promise<User | null>;
-  save(user: User): Promise<void>;
+  findById(id: number): Promise<User | null>; // Новый метод для поиска пользователя по ID
+  save(user: User): Promise<User | null>;
 }
