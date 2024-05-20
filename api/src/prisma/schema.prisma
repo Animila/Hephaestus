@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model plans {
+  id       Int        @id @default(autoincrement())
+  title    String
+  scopes   Json // возможности
+  price    Int // цены
+  payments payments[]
+}
+
+model users {
+  id         Int        @id @default(autoincrement())
+  first_name String
+  last_name  String
+  phone      String
+  email      String     @unique
+  password   String
+  activated  Boolean    @default(false)
+  role_id    Int
+  roles      roles      @relation(fields: [role_id], references: [id])
+  payments   payments[]
+  cabinet    cabinets[]
+  created_at DateTime   @default(now())
+  tokens     tokens[]
+}
+
+model roles {
+  id    Int     @id @default(autoincrement())
+  title String
+  users users[]
+}
+
+model payments {
+  id         Int      @id @default(autoincrement())
+  plan_id    Int
+  user_id    Int
+  user       users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  plan       plans    @relation(fields: [plan_id], references: [id], onDelete: NoAction)
+  created_at DateTime @default(now())
+  end_date   DateTime
+}
+
+model cabinets {
+  id         Int        @id @default(autoincrement())
+  user_id    Int
+  user       users      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  title      String
+  created_at DateTime   @default(now())
+  supports   supports[]
+}
+
+model supports {
+  id          Int        @id @default(autoincrement())
+  cabinet_id  Int
+  cabinet     cabinets   @relation(fields: [cabinet_id], references: [id], onDelete: Cascade)
+  title       String
+  description String
+  reply_id    Int?
+  parent      supports?  @relation("SupportReplies", fields: [reply_id], references: [id], onDelete: Cascade)
+  replies     supports[] @relation("SupportReplies")
+  status_id   Int
+  status      statuses   @relation(fields: [status_id], references: [id], onDelete: NoAction)
+  created_at  DateTime   @default(now())
+}
+
+model statuses {
+  id       Int        @id @default(autoincrement())
+  title    String
+  supports supports[]
+}
+
+model tokens {
+  id          Int       @id @default(autoincrement())
+  user_id     Int
+  token       String
+  type        String
+  number_code Int?
+  is_valid    Boolean   @default(true)
+  created_at  DateTime  @default(now())
+  used_at     DateTime?
+  users       users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}

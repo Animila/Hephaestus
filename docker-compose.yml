@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  maindb:
+    image: postgres:alpine3.18
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    container_name: api.postgres
+    environment:
+      - POSTGRES_USER=${DEV_PG_DB_USER}
+      - POSTGRES_PASSWORD=${DEV_PG_DB_PASS}
+      - POSTGRES_DB=${DEV_PG_DATABASE}
+    ports:
+      - '${DEV_PG_DB_PORT}:5432'
+    expose:
+      - ${DEV_PG_DB_PORT}
+    healthcheck:
+      test:
+        [ 'CMD-SHELL', 'pg_isready -U ${DEV_PG_DB_USER} -d ${DEV_PG_DATABASE}' ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: always
