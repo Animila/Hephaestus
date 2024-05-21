@@ -5,6 +5,7 @@ import { PrismaTokenRepository } from '../token/infrastructure/prisma-token.repo
 import { TokenService } from '../token/application/token.service';
 import { UserController } from './user.controller';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { RabbitModule } from '../../common/rabbitmq/rabbit.module';
 
 @Module({
   controllers: [UserController],
@@ -17,6 +18,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
     { provide: 'UserRepository', useClass: PrismaUserRepository },
     { provide: 'TokenRepository', useClass: PrismaTokenRepository },
   ],
+  imports: [RabbitModule], // Добавьте RabbitModule в imports
   exports: [UserService],
 })
 export class UserModule {}

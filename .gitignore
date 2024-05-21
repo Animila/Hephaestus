@@ -2,3 +2,4 @@
 .idea
 database
 nginx/ssl
+rabbitmq

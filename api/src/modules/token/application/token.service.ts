@@ -1,40 +1,29 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, Logger } from '@nestjs/common';
 import { TokenRepository } from '../domain/token.repository';
 import { UserRepository } from '../../user/domain/user.repository';
-import * as nodemailer from 'nodemailer';
+import { ProducerService } from "../../../common/rabbitmq/producer.service";
 
 @Injectable()
 export class TokenService {
+  private readonly logger = new Logger(TokenService.name);
+
   constructor(
     @Inject('TokenRepository') private readonly tokenRepository: TokenRepository,
     @Inject('UserRepository') private readonly userRepository: UserRepository,
+    private readonly producerService: ProducerService,
   ) {}
 
   async sendToken(userId: number, type: string): Promise<void> {
     const token = await this.tokenRepository.generateToken(userId, type);
-    // Отправка кода по email пользователя
-    const user = await this.userRepository.findById(userId); // Получаем пользователя по ID
+    const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new Error('User not found');
     }
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+    this.logger.log(`Sending token ${token.token} to user ${user.email}`);
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: user.email, // Используем email пользователя
-      subject: 'Your Verification Code',
-      text: `Your verification code is: ${token.token}`,
-    };
-
-    await transporter.sendMail(mailOptions);
-    console.log(`Отправить код ${token.token} пользователю с ID ${userId}`);
+    await this.producerService.addToEmailQueue({ email: user.email, token: token.token, userId: user.id });
+    this.logger.log(`Sent token ${token.token} to user ${user.email}`);
   }
 
   async validateToken(userId: number, code: number): Promise<boolean> {

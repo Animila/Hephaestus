@@ -8,10 +8,6 @@ RUN yarn install
 
 COPY . .
 
-#COPY prisma ./prisma/
-#
-#RUN npx prisma generate
-
 RUN yarn build
 
 COPY .env .env
