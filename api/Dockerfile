@@ -10,8 +10,6 @@ COPY . .
 
 RUN yarn build
 
-COPY .env .env
-
 EXPOSE 5000
 
 CMD ["yarn", "start:prod"]
