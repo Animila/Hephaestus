@@ -14,5 +14,7 @@
 * **Containerization**: Docker, Docker-Compose 
 * **Load Balancing**: Nginx
 
+prisma migrate deployp
+
 
 

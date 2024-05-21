@@ -8,8 +8,8 @@ export class CabinetController {
   constructor(private readonly cabinetService: CabinetService) {}
 
   @Post()
-  create(@Request() req, @Body() body: { title: string }) {
-    return this.cabinetService.create(req.user.id, body.title);
+  create(@Request() req, @Body() body: { user_id: string, title: string }) {
+    return this.cabinetService.create(parseInt(body.user_id), body.title);
   }
 
   @Get()
