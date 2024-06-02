@@ -1,8 +1,9 @@
 // src/modules/auth/auth.controller.ts
-import { Controller, Post, UsePipes, Body, NotFoundException } from '@nestjs/common';
+import { Controller, Post, UsePipes, Body, NotFoundException, Get, UseGuards } from "@nestjs/common";
 import { AuthService } from './application/auth.service';
 import { UserService } from '../user/application/user.service';
 import { LoginValidationPipe } from 'src/common/pipes/login-validation.pipe';
+import { JwtAuthGuard } from "./guards/jwt-auth.guard";
 
 @Controller('auth')
 export class AuthController {
@@ -20,6 +21,7 @@ export class AuthController {
     }
     return { message: 'Verification code sent to email' };
   }
+
 
   @Post('verify')
   @UsePipes(LoginValidationPipe)
