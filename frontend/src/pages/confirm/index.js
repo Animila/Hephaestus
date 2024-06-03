@@ -1,13 +1,21 @@
 // pages/confirm.js
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from "react";
 import { useRouter } from 'next/router';
 import { AuthContext } from '@/contexts/AuthContext';
 
 const Confirm = () => {
   const [code, setCode] = useState('');
-  const { confirm } = useContext(AuthContext);
+  const { confirm, checkAuth } = useContext(AuthContext);
   const router = useRouter();
   const { email } = router.query;
+
+  useEffect(() => {
+    checkAuth().then(res => {
+      if(res) {
+        router.push('/admin')
+      }
+    })
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();

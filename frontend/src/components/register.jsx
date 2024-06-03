@@ -13,16 +13,19 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Запрос на регистрацию к вашему API
-    const response = await fetch('/api/register', {
+    const response = await fetch('/api/user/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, surname, email, phone }),
+      body: JSON.stringify({ first_name: name, last_name: surname, email, phone, role_id: 2 }),
     });
 
     if (response.ok) {
-      router.push('/login');
+      router.push({
+        pathname: '/confirm',
+        query: { email }
+      });
     }
   };
   return (
