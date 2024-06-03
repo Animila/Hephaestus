@@ -18,7 +18,8 @@ export class UserService {
     if (existing_user) {
       throw new ConflictException('Email is already in use');
     }
-    const user = new User(null, first_name, last_name, phone, email, false, role_id, new Date());
+
+    const user = new User(null, first_name, last_name, phone, email, false, role_id ?? 2 , new Date());
     const saved_user = await this.user_repository.save(user);
     if(!saved_user) {
       throw new InternalServerErrorException('Ошибка сохранения');
