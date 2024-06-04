@@ -5,6 +5,7 @@ import { LogoSite } from "@/assets/LogoSite";
 import Link from "next/link";
 import { AuthContext } from "@/contexts/AuthContext";
 import { useRouter } from "next/router";
+import { isMobile } from "react-device-detect";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,7 +44,7 @@ export default function Home() {
             Попробовать бесплатно
           </button>
         </div>
-        <LogoSite height={350} width={350}/>
+        <LogoSite height={350} width={350} />
       </section>
       <section className='md:mx-[100px] sm:mx-[10px] grid sm:grid-cols-1 md:grid-cols-2 gap-[50px] mt-[100px]'>
         <div className='flex flex-col gap-[20px] px-[50px] py-[50px] border-[1px] border-text rounded-[25px]'>

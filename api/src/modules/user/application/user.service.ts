@@ -48,6 +48,8 @@ export class UserService {
       throw new NotFoundException('Invalid or expired token');
     }
 
+    user['role'] = await this.role_service.findById(user.role_id);
+
     return user;
   }
 

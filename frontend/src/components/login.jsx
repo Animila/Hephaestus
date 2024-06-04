@@ -11,7 +11,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await login(email);
+    const success = await login(email)
     if (success) {
       router.push({
         pathname: '/confirm',
@@ -25,7 +25,7 @@ const Login = () => {
   return (
     <div className="flex h-screen sm:flex-col md:flex-row">
       <div className="sm:py-[30px] md:flex-1 bg-blue text-white flex flex-col justify-center items-center">
-        <h1 className="text-3xl md:text-5xl font-bold">Войдите в свой аккаунт</h1>
+        <h1 className="text-3xl md:text-5xl font-bold text-center">Войдите в свой аккаунт</h1>
         <p className="mt-4 md:text-xl"><Link href="/register" className="underline">или создайте новый</Link></p>
       </div>
       <div className="flex-1 flex flex-col justify-center items-center bg-white">

@@ -45,7 +45,7 @@ const AdminLayout = ({ children }) => {
           </nav>
         )}
       </header>
-      <main className="flex-grow mx-[100px]">
+      <main className="flex-grow md:mx-[100px] sm:mx-[10px]">
         {children}
       </main>
       <footer className="bg-[#E1E0EC] text-white p-4">

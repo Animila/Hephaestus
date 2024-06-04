@@ -12,7 +12,7 @@ export default function LoginPage() {
       if(res) {
         router.push('/admin')
       }
-    })
+    }).catch(() => {})
   }, [])
   return <Login />;
 }

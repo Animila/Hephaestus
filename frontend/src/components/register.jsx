@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { LogoSite } from "@/assets/LogoSite";
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
+import { AuthService } from "@/services/AuthService";
+import { AuthContext } from "@/contexts/AuthContext";
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -9,19 +11,14 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const router = useRouter();
+  const { register } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Запрос на регистрацию к вашему API
-    const response = await fetch('/api/user/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ first_name: name, last_name: surname, email, phone, role_id: 2 }),
-    });
+    const response = await register(name, surname, email, phone)
 
-    if (response.ok) {
+    if (response) {
       router.push({
         pathname: '/confirm',
         query: { email }

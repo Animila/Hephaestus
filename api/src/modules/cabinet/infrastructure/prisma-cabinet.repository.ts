@@ -20,7 +20,9 @@ export class PrismaCabinetRepository implements CabinetRepository {
   }
 
   async findAllByUser(userId: number): Promise<Cabinet[]> {
-    const cabinets = await this.prisma.cabinets.findMany({ where: { user_id: userId } });
+    const cabinets = await this.prisma.cabinets.findMany({ where: { user_id: userId }, orderBy: [
+        { id: 'asc'}
+      ]});
     return cabinets.map(cabinet => new Cabinet(cabinet.id, cabinet.user_id, cabinet.title, cabinet.created_at));
   }
 
