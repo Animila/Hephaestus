@@ -55,18 +55,18 @@ const UserEditModal = ({ isOpen, onClose, onSubmit, user }) => {
           Email:
           <input className="w-full p-2 border border-gray-300 rounded mb-4" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
-        <label>
-          Активирован:
-          <input className='ml-[10px]' type="checkbox" checked={activated} onChange={(e) => setActivated(e.target.checked)} />
-        </label>
-        <label>
-          Роль:
-          <select className="w-full p-2 border border-gray-300 rounded mb-4" value={roleId} onChange={(e) => setRoleId(Number(e.target.value))}>
-            {roles.map((role) => (
-              <option key={role.id} value={role.id}>{role.title}</option>
-            ))}
-          </select>
-        </label>
+        {/*<label>*/}
+        {/*  Активирован:*/}
+        {/*  <input className='ml-[10px]' type="checkbox" checked={activated} onChange={(e) => setActivated(e.target.checked)} />*/}
+        {/*</label>*/}
+        {/*<label>*/}
+        {/*  Роль:*/}
+        {/*  <select className="w-full p-2 border border-gray-300 rounded mb-4" value={roleId} onChange={(e) => setRoleId(Number(e.target.value))}>*/}
+        {/*    {roles.map((role) => (*/}
+        {/*      <option key={role.id} value={role.id}>{role.title}</option>*/}
+        {/*    ))}*/}
+        {/*  </select>*/}
+        {/*</label>*/}
         <button className='flex justify-center items-center w-full py-[10px] bg-blue text-white rounded' type="button" onClick={handleSubmit}>Сохранить</button>
       </form>
       </div>
