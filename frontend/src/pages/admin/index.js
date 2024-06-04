@@ -24,7 +24,7 @@ const Admin = () => {
       // AuthService.getId(res.data.id).then(res => {
       //   setUser(res.data)
       // })
-      if(!res.data) {
+      if(!res) {
         router.push('/login')
       }
     }).catch(() => {
