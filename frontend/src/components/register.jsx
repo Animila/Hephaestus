@@ -2,10 +2,9 @@ import Link from 'next/link';
 import { LogoSite } from "@/assets/LogoSite";
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
-import { AuthService } from "@/services/AuthService";
 import { AuthContext } from "@/contexts/AuthContext";
 
-const Register = () => {
+export const Register = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
@@ -79,5 +78,3 @@ const Register = () => {
     </div>
   );
 }
-
-export default Register;

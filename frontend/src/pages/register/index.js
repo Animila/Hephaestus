@@ -1,7 +1,7 @@
-import Register from '@/components/Register';
 import { useContext, useEffect } from "react";
 import { AuthContext } from "@/contexts/AuthContext";
 import { useRouter } from "next/router";
+import { Register } from "@/components/register";
 
 export default function RegisterPage() {
   const { checkAuth } = useContext(AuthContext);

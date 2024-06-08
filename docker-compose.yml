@@ -55,12 +55,12 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/ssl:/etc/nginx/ssl
     ports:
-      - 80:80
-      - 443:443
+      - "${NGINX_PORT_HTTP}:80"
+      - "${NGINX_PORT_HTTPS}:443"
     container_name: nginx
     expose:
-      - 443
-      - 80
+      - ${NGINX_PORT_HTTPS}
+      - ${NGINX_PORT_HTTP}
     environment:
       NGINX_COMPRESS: 'brotli'
     restart: always

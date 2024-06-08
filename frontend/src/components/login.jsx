@@ -4,7 +4,7 @@ import { LogoSite } from "@/assets/LogoSite";
 import { useRouter } from "next/router";
 import { AuthContext } from "@/contexts/AuthContext";
 
-const Login = () => {
+export const Login = () => {
   const [email, setEmail] = useState('');
   const { login } = useContext(AuthContext);
   const router = useRouter();
@@ -47,5 +47,3 @@ const Login = () => {
     </div>
   );
 }
-
-export default Login;
