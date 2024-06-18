@@ -1,5 +1,5 @@
 // src/modules/auth/auth.controller.ts
-import { Controller, Post, UsePipes, Body, NotFoundException, Get, UseGuards } from "@nestjs/common";
+import { Controller, Post, UsePipes, Body, NotFoundException, Get, UseGuards, Delete, Request } from "@nestjs/common";
 import { AuthService } from './application/auth.service';
 import { UserService } from '../user/application/user.service';
 import { LoginValidationPipe } from 'src/common/pipes/login-validation.pipe';
@@ -29,4 +29,11 @@ export class AuthController {
     const user = await this.authService.validateUser(body.email, body.token);
     return this.authService.login(user);
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @Delete('logout')
+  // async logout(@Request() req) {
+  //   req.user = null
+  //   req.token = null
+  // }
 }

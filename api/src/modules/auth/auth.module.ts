@@ -9,13 +9,14 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthController } from './auth.controller';
 import { RoleModule } from "../role/role.module";
+import * as process from "process";
 
 @Module({
   imports: [
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '60m' },
+      signOptions: { expiresIn: process.env.EXPIRES_SIGN || '60m' },
     }),
     UserModule,
     RoleModule

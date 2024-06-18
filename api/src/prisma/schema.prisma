@@ -8,27 +8,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model users {
+  id         Int      @id @default(autoincrement())
+  first_name String
+  last_name  String
+  phone      String
+  email      String   @unique
+  activated  Boolean  @default(false)
+  role_id    Int
+  roles      roles    @relation(fields: [role_id], references: [id])
+  created_at DateTime @default(now())
+
+  payments payments[]
+  cabinet  cabinets[]
+  tokens   tokens[]
+}
+
 model plans {
   id       Int        @id @default(autoincrement())
   title    String     @unique
   scopes   Json // возможности
   price    Int // цены
   payments payments[]
-}
-
-model users {
-  id         Int        @id @default(autoincrement())
-  first_name String
-  last_name  String
-  phone      String
-  email      String     @unique
-  activated  Boolean    @default(false)
-  role_id    Int
-  roles      roles      @relation(fields: [role_id], references: [id])
-  payments   payments[]
-  cabinet    cabinets[]
-  created_at DateTime   @default(now())
-  tokens     tokens[]
 }
 
 model roles {

@@ -38,6 +38,7 @@ services:
       - PORT=${API_PORT}
       - RABBITMQ_USER=${RABBITMQ_USER}
       - RABBITMQ_PASS=${RABBITMQ_PASS}
+      - EXPIRES_SIGN=${EXPIRES_SIGN}
     command: >
       sh -c "
       yarn install &&

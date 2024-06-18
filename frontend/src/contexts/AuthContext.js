@@ -10,18 +10,33 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
 
   const login = async (email) => {
-    const data = await AuthService.login(email)
-    return data.status === 201
+    return await AuthService.login(email).then(data => {
+      console.log('9383838 ', data)
+      return data.status
+    }).catch(err => {
+      console.error('555333 ', err.response.status)
+      return err.response.status
+    })
   };
 
   const register = async (first_name, last_name, email, phone) => {
-    try {
-      const data = await AuthService.register(first_name, last_name, email, phone);
-      console.log(`3456 ${data}`)
-    } catch (error) {
-      console.error('Ошибка регистрации:', error);
-      return false
-    }
+    return await AuthService.register(first_name, last_name, email, phone)
+      .then(res => {
+        console.log(`3456 ${res}`)
+        return {success: true}
+      })
+      .catch(error => {
+        if(error.response.status === 400) {
+          const data = error.response.data.message
+          const errors = data.split(':')[1].trim().split(', ')
+          console.error('Ошибка регистрации:', errors);
+          return {success: false, errors: errors, status: 400}
+        }
+
+        if(error.response.status === 409) {
+          return {success: false, errors: ['email'], status: 409}
+        }
+      });
   };
 
   const checkAuth = async () => {

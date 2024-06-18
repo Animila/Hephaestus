@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { LogoSite } from "@/assets/LogoSite";
 import Link from "next/link";
+import { AuthService } from "@/services/AuthService";
 
 const AdminLayout = ({ children }) => {
   const router = useRouter();
@@ -24,7 +25,10 @@ const AdminLayout = ({ children }) => {
             </nav>
           </div>
           <div className="flex items-center">
-            <button onClick={() => router.push('/login')} className="hidden md:block bg-blue-700 px-4 py-2 rounded-md">
+            <button onClick={() => {
+              AuthService.logout();
+              router.reload();
+            }} className="hidden md:block bg-blue-700 px-4 py-2 rounded-md">
               Выйти
             </button>
             <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
@@ -39,7 +43,7 @@ const AdminLayout = ({ children }) => {
             <Link href="/admin/projects" onClick={() => setMenuOpen(false)}>Проекты</Link>
             <Link href="/admin/models" onClick={() => setMenuOpen(false)}>Модели</Link>
             <Link href="/admin/support" onClick={() => setMenuOpen(false)}>Техподдержка</Link>
-            <button onClick={() => { setMenuOpen(false); router.push('/login'); }} className="bg-blue-700 px-4 py-2 rounded-md">
+            <button onClick={() => { setMenuOpen(false); AuthService.logout(); router.reload(); }} className="bg-blue-700 px-4 py-2 rounded-md">
               Выйти
             </button>
           </nav>

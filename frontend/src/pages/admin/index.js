@@ -102,17 +102,17 @@ const Admin = () => {
           <div className="bg-[#E1E0EC] grid grid-cols-4 gap-[12px] p-[10px] mt-[40px]">
             <div className="col-span-2 bg-white rounded-[15px] p-[20px]">
               <span className='text-blue text-[32px] font-medium'>89</span>
-              <p style={{overflowWrap: 'anywhere'}}>Сгенерированных моделей</p>
+              <p style={{overflowWrap: 'anywhere'}}>Моделей</p>
             </div>
             <div className="col-span-2 bg-white rounded-[15px] p-[20px]">
               <span className='text-blue text-[32px] font-medium'>{projects.length}</span>
               <p style={{overflowWrap: 'anywhere'}}>Проектов</p>
             </div>
-            <div className="col-span-2 bg-white rounded-[15px] p-[20px]">
+            <div className="col-span-4 bg-white rounded-[15px] p-[20px]">
               <span style={{overflowWrap: 'anywhere'}}>Дата регистрации </span>
               <p className='text-blue text-[20px] font-medium' style={{overflowWrap: 'anywhere'}}>{new Date(user.created_at).toLocaleDateString() + ' ' + new Date(user.created_at).toLocaleTimeString()}</p>
             </div>
-            <div className="col-span-2 bg-white rounded-[15px] p-[20px] flex flex-col justify-between">
+            <div className="col-span-4 bg-white rounded-[15px] p-[20px] flex flex-col justify-between">
               <div className='flex justify-between items-center'>
                 <span>Тариф</span>
                 {/*{user.role.title === 'Администратор' && <Premium />}*/}
