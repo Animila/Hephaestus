@@ -1,11 +1,11 @@
 // pages/confirm.js
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { useRouter } from 'next/router';
-import { AuthContext } from '@/contexts/AuthContext';
+import { Auth_context } from '@/contexts/auth_context';
 
 const ConfirmPage = () => {
   const [code, setCode] = useState(new Array(6).fill(""));
-  const { confirm, checkAuth, login } = useContext(AuthContext);
+  const { confirm, checkAuth, login } = useContext(Auth_context);
   const router = useRouter();
   const { email } = router.query;
   const [timer, setTimer] = useState(60);
@@ -15,7 +15,7 @@ const ConfirmPage = () => {
   useEffect(() => {
     checkAuth().then(res => {
       if(res) {
-        router.push('/admin')
+        router.push('/admin/projects')
       }
     })
 
@@ -60,7 +60,7 @@ const ConfirmPage = () => {
      const success = await confirm(email, codeString);
      console.log('34567', success)
      if (success) {
-       router.push('/admin');
+       router.push('/admin/projects');
      }
    } catch (error) {
      alert('Ошибка подтверждения. Попробуйте снова.');

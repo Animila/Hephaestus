@@ -1,16 +1,16 @@
-import { AuthContext } from "@/contexts/AuthContext";
+import { Auth_context } from "@/contexts/auth_context";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { Login } from "@/components/login";
 
 export default function LoginPage() {
-  const { checkAuth } = useContext(AuthContext);
+  const { checkAuth } = useContext(Auth_context);
   const router = useRouter();
 
   useEffect(() => {
     checkAuth().then(res => {
       if(res) {
-        router.push('/admin')
+        router.push('/admin/projects')
       }
     }).catch(() => {})
   }, [])

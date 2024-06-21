@@ -3,11 +3,12 @@ import React, { createContext, useState } from "react";
 import { useRouter } from "next/router";
 import { AuthService } from "@/services/AuthService";
 
-export const AuthContext = createContext();
+export const Auth_context = createContext();
 
 export const AuthProvider = ({ children }) => {
   const router = useRouter();
   const [user, setUser] = useState(null)
+  const [userId, setUserId] = useState(null)
 
   const login = async (email) => {
     return await AuthService.login(email).then(data => {
@@ -72,8 +73,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ login, register, confirm, checkAuth, user, setUser }}>
+    <Auth_context.Provider value={{ login, register, confirm, checkAuth, user, setUser, userId, setUserId }}>
       {children}
-    </AuthContext.Provider>
+    </Auth_context.Provider>
   );
 };

@@ -3,19 +3,19 @@ import React, { useContext } from "react";
 import Image from "next/image";
 import { LogoSite } from "@/assets/LogoSite";
 import Link from "next/link";
-import { AuthContext } from "@/contexts/AuthContext";
+import { Auth_context } from "@/contexts/auth_context";
 import { useRouter } from "next/router";
 import { isMobile } from "react-device-detect";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(Auth_context);
   const router = useRouter();
 
   const handleTryFreeClick = () => {
     if (isAuthenticated) {
-      router.push('/admin');
+      router.push('/admin/projects');
     } else {
       router.push('/login');
     }

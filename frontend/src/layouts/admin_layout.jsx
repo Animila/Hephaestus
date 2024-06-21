@@ -1,13 +1,57 @@
 // components/AdminLayout.js
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { LogoSite } from "@/assets/LogoSite";
 import Link from "next/link";
 import { AuthService } from "@/services/AuthService";
+import { LeftInfo } from "@/components/left_info";
+import UserEditModal from "@/modals/EditUserModal";
+import { Auth_context } from "@/contexts/auth_context";
+import { CabinetService } from "@/services/CabinetService";
 
 const AdminLayout = ({ children }) => {
+  const { checkAuth, user, setUser } = useContext(Auth_context);
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isUserModalOpen, setUserModalOpen] = useState(false);
+  const [projects, setProjects] = useState([])
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    checkAuth().then(res => {
+      console.log('3456789 ', res.data)
+      // AuthService.getId(res.data.id).then(res => {
+      //   setUser(res.data)
+      // })
+      if(!res) {
+        router.push('/login')
+      }
+    }).catch(() => {
+      router.push('/login')
+    })
+    loadProjects(token)
+  }, [])
+
+  const loadProjects = (token) => {
+    CabinetService.getAll(token).then(res => {
+      setProjects(res.data)
+    })
+  }
+
+  const handleUpdateUser = (updatedUser) => {
+    const token = localStorage.getItem('token');
+    AuthService.updateUser(user.id, updatedUser, token).then(res => {
+      if (res.status === 200) {
+        setUser(prevUser => ({
+          ...prevUser,
+          ...updatedUser,
+          role: res.data.role // Если роль также возвращается в ответе
+        }));
+      }
+    });
+  };
+
+  if(!user) return <div>Loading...</div>
 
   return (
     <div className="bg-[#DBE4FF] min-h-screen flex flex-col">
@@ -50,7 +94,22 @@ const AdminLayout = ({ children }) => {
         )}
       </header>
       <main className="flex-grow md:mx-[100px] sm:mx-[10px]">
-        {children}
+        <div className="grid md:grid-cols-12 sm:grid-cols-1 mt-[50px] gap-[20px]">
+          <LeftInfo
+            setUserModalOpen={setUserModalOpen}
+            user={user}
+            projects={projects}
+          />
+          <div className="sm:col-span-1 md:col-span-8">
+            {children}
+          </div>
+        </div>
+        <UserEditModal
+          isOpen={isUserModalOpen}
+          onClose={() => setUserModalOpen(false)}
+          onSubmit={handleUpdateUser}
+          user={user}
+        />
       </main>
       <footer className="bg-[#E1E0EC] text-white p-4">
         <div className="container mx-auto text-center text-text">

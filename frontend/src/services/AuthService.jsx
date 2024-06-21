@@ -11,7 +11,7 @@ export class AuthService {
   }
 
   static async register(first_name, last_name, email, phone) {
-      return api.post('/user/register', { first_name, last_name, email, phone, role_id: 2 })
+      return api.post('/user/register', { first_name, last_name, email, phone, role_id: 3 })
   }
 
   static async getId(id) {
