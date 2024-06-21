@@ -1,4 +1,3 @@
-// src/modules/auth/application/auth.service.ts
 import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../../user/application/user.service';
@@ -24,7 +23,7 @@ export class AuthService {
   async login(user: User) {
     const role = await this.roleService.findById(user.role_id);
     console.log('234567 ', role)
-    const plainUserObject = { ...user, role };
+    const plainUserObject = { id: user.id, role };
     console.log('2345678 ', plainUserObject)
     return {
       access_token: this.jwtService.sign(plainUserObject),

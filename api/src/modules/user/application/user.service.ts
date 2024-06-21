@@ -48,6 +48,7 @@ export class UserService {
       throw new NotFoundException('Invalid or expired token');
     }
 
+    // @ts-ignore
     user['role'] = await this.role_service.findById(user.role_id);
 
     return user;
@@ -57,6 +58,7 @@ export class UserService {
   async findAll(): Promise<User[]> {
     const users = await this.user_repository.findAll();
     for (const user of users) {
+      // @ts-ignore
       user['role'] = await this.role_service.findById(user.role_id);
     }
     return users;
@@ -64,6 +66,8 @@ export class UserService {
 
   async findOne(id: number): Promise<User | null> {
     const user = await this.user_repository.findById(id)
+    console.log('1234567 ', user)
+    // @ts-ignore
     user['role'] = await this.role_service.findById(user.role_id);
     return user;
   }
