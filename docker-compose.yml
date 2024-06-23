@@ -44,7 +44,7 @@ services:
       sh -c "
       yarn install &&
       npx prisma generate &&
-      yarn start:prod
+      yarn start
       "
     volumes:
       - ./api:/app
