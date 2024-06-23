@@ -6,8 +6,10 @@ import ProjectModal from "@/modals/ProjectModal";
 import { ShareSVG } from "@/assets/ShareSVG";
 import { EditSVG } from "@/assets/EditSVG";
 import { DeleteSVG } from "@/assets/DeleteSVG";
+import { useRouter } from "next/router";
 
 const Admin = () => {
+  const router = useRouter()
   const { user } = useAuth();
   const [projects, setProjects] = useState([])
   const [isModalOpen, setModalOpen] = useState(false);
@@ -71,7 +73,7 @@ const Admin = () => {
                   <button
                     className="bg-blue py-[10px] px-[20px] rounded-[10px] text-white text-[20px]"
                     onClick={() => {
-
+                      router.push(`/admin/models/?project_id=${project.id}`).then(r => console.log(r))
                     }}>
                     Открыть
                   </button>
@@ -79,7 +81,7 @@ const Admin = () => {
                     <button
                       className="bg-blue py-[10px] px-[9px] rounded-[10px] text-white"
                       onClick={() => {
-                      }}>
+                        }}>
                       <ShareSVG />
                     </button>
                     <button

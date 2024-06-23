@@ -8,6 +8,7 @@ import { LeftInfo } from "@/components/left_info";
 import UserEditModal from "@/modals/EditUserModal";
 import { useAuth } from "@/contexts/auth_context";
 import { CabinetService } from "@/services/CabinetService";
+import { ModelsService } from "@/services/ModelsService";
 
 const AdminLayout = ({ children }) => {
   const { checkAuth, user, setUser } = useAuth();
@@ -15,28 +16,37 @@ const AdminLayout = ({ children }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isUserModalOpen, setUserModalOpen] = useState(false);
   const [projects, setProjects] = useState([])
+  const [models, setModels] = useState([])
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     checkAuth().then(res => {
       console.log('3456789 ', res.data)
-      // AuthService.getId(res.data.id).then(res => {
-      //   setUser(res.data)
-      // })
       if(!res) {
         router.push('/login')
       }
     }).catch(() => {
       router.push('/login')
     })
-    loadProjects(token)
+    loadProjectsAndModels(token)
   }, [])
 
-  const loadProjects = (token) => {
-    CabinetService.getAll(token).then(res => {
-      setProjects(res.data)
-    })
-  }
+  const loadProjectsAndModels = async (token) => {
+    try {
+      const projectsResponse = await CabinetService.getAll(token);
+      const projectsData = projectsResponse.data;
+      setProjects(projectsData);
+
+      // const modelsPromises = projectsData.map(project => ModelsService.getModels(project.id));
+      // const modelsResponses = await Promise.all(modelsPromises);
+      // console.log('98765432 ', modelsResponses)
+      // const allModels = modelsResponses.flatMap(response => response.data);
+      // console.log('22323233v ', allModels)
+      // setModels(allModels);
+    } catch (error) {
+      console.log("Error loading projects or models:", error);
+    }
+  };
 
   const handleUpdateUser = (updatedUser) => {
     const token = localStorage.getItem('token');
@@ -99,6 +109,7 @@ const AdminLayout = ({ children }) => {
             setUserModalOpen={setUserModalOpen}
             user={user}
             projects={projects}
+            models={models}
           />}
           <div className={`sm:col-span-1 ${router.pathname !== '/admin/support' ? 'md:col-span-8' : 'md:col-span-12' }`}>
             {children}

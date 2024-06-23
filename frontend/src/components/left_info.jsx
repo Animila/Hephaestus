@@ -1,4 +1,4 @@
-export const LeftInfo = ({setUserModalOpen, projects, user}) => {
+export const LeftInfo = ({setUserModalOpen, projects, user, models}) => {
   return <div className='sm:col-span-1 md:col-span-4'>
 
     <div className='bg-white rounded-[20px] px-[14px] py-[10px]'>
@@ -16,7 +16,7 @@ export const LeftInfo = ({setUserModalOpen, projects, user}) => {
 
     <div className="bg-[#E1E0EC] grid grid-cols-4 gap-[12px] p-[10px] mt-[40px]">
       <div className="col-span-2 bg-white rounded-[15px] p-[20px]">
-        <span className='text-blue text-[32px] font-medium'>89</span>
+        <span className='text-blue text-[32px] font-medium'>2</span>
         <p style={{ overflowWrap: 'anywhere' }}>Моделей</p>
       </div>
       <div className="col-span-2 bg-white rounded-[15px] p-[20px]">
