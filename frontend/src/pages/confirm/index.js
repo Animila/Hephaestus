@@ -1,11 +1,11 @@
 // pages/confirm.js
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from 'next/router';
-import { Auth_context } from '@/contexts/auth_context';
+import { seAuth } from "@/contexts/auth_context";
 
 const ConfirmPage = () => {
   const [code, setCode] = useState(new Array(6).fill(""));
-  const { confirm, checkAuth, login } = useContext(Auth_context);
+  const { confirm, checkAuth, login } = useAuth();
   const router = useRouter();
   const { email } = router.query;
   const [timer, setTimer] = useState(60);

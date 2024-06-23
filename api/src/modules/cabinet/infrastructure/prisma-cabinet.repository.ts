@@ -10,31 +10,34 @@ export class PrismaCabinetRepository implements CabinetRepository {
   async findById(id: number): Promise<Cabinet | null> {
     const cabinet = await this.prisma.cabinets.findUnique({ where: { id } });
     if (!cabinet) return null;
-    return new Cabinet(cabinet.id, cabinet.user_id, cabinet.title, cabinet.created_at);
+    return new Cabinet(cabinet.id, cabinet.user_id, cabinet.title,cabinet.description, cabinet.created_at);
   }
 
   async findByTitle(title: string): Promise<Cabinet | null> {
     const cabinet = await this.prisma.cabinets.findUnique({ where: { title } });
     if (!cabinet) return null;
-    return new Cabinet(cabinet.id, cabinet.user_id, cabinet.title, cabinet.created_at);
+    return new Cabinet(cabinet.id, cabinet.user_id, cabinet.title,cabinet.description, cabinet.created_at);
   }
 
   async findAllByUser(userId: number): Promise<Cabinet[]> {
     const cabinets = await this.prisma.cabinets.findMany({ where: { user_id: userId }, orderBy: [
         { id: 'asc'}
       ]});
-    return cabinets.map(cabinet => new Cabinet(cabinet.id, cabinet.user_id, cabinet.title, cabinet.created_at));
+    return cabinets.map(cabinet => new Cabinet(cabinet.id, cabinet.user_id, cabinet.title,cabinet.description, cabinet.created_at));
   }
 
   async save(cabinet: Cabinet): Promise<void> {
+    console.log('1234567 ', cabinet)
     const existingCabinet = await this.prisma.cabinets.findUnique({ where: { title: cabinet.title } });
     if (existingCabinet) {
       throw new ConflictException('Cabinet title already exists');
     }
+    console.log('876543 ', cabinet)
     await this.prisma.cabinets.create({
       data: {
         user_id: cabinet.userId,
         title: cabinet.title,
+        description: cabinet.description,
         created_at: cabinet.createdAt,
       },
     });
@@ -49,6 +52,7 @@ export class PrismaCabinetRepository implements CabinetRepository {
       where: { id: cabinet.id },
       data: {
         title: cabinet.title,
+        description: cabinet.description,
       },
     });
   }

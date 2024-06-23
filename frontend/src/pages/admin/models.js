@@ -1,19 +1,43 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Auth_context } from "@/contexts/auth_context";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/auth_context";
 import AdminLayout from "@/layouts/admin_layout";
-import { Premium } from "@/assets/Premium";
-import { AuthService } from "@/services/AuthService";
-import UserEditModal from "@/modals/EditUserModal";
+import { CabinetService } from "@/services/CabinetService";
 
 const Models = () => {
+  const { user } = useAuth();
+  const [projects, setProjects] = useState([])
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [currentProject, setCurrentProject] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    loadProjects(token)
+  }, [])
+
+
+  const loadProjects = (token) => {
+    CabinetService.getAll(token).then(res => {
+      console.log('2345676543', res.data)
+      setProjects(res.data)
+    })
+  }
 
   return (
     <AdminLayout>
-      <div className="grid md:grid-cols-12 sm:grid-cols-1 mt-[50px] gap-[20px]">
-fghjkl;
-        <div className="sm:col-span-1 md:col-span-8"></div>
+      {projects.length === 0
+        ? <div className="w-full text-blue text-center mb-[20px]">
+          Для работы с моделями необходимо создать хотя бы один проект
+          <br/>
+          <a href="/admin/projects" className="underline">Создать проект</a>
       </div>
+        : <button className="w-full border-blue text-blue border-[1px] py-[10px] rounded-[10px] hover:bg-light_blue"
+                onClick={() => {
+                  setModalOpen(true);
+                  setCurrentProject(null);
+                }}>
+          + Добавить модель
+        </button>
+      }
     </AdminLayout>
   );
 };

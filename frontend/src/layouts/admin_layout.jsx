@@ -1,16 +1,16 @@
 // components/AdminLayout.js
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { LogoSite } from "@/assets/LogoSite";
 import Link from "next/link";
 import { AuthService } from "@/services/AuthService";
 import { LeftInfo } from "@/components/left_info";
 import UserEditModal from "@/modals/EditUserModal";
-import { Auth_context } from "@/contexts/auth_context";
+import { useAuth } from "@/contexts/auth_context";
 import { CabinetService } from "@/services/CabinetService";
 
 const AdminLayout = ({ children }) => {
-  const { checkAuth, user, setUser } = useContext(Auth_context);
+  const { checkAuth, user, setUser } = useAuth();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isUserModalOpen, setUserModalOpen] = useState(false);
@@ -95,12 +95,12 @@ const AdminLayout = ({ children }) => {
       </header>
       <main className="flex-grow md:mx-[100px] sm:mx-[10px]">
         <div className="grid md:grid-cols-12 sm:grid-cols-1 mt-[50px] gap-[20px]">
-          <LeftInfo
+          {router.pathname !== '/admin/support' && <LeftInfo
             setUserModalOpen={setUserModalOpen}
             user={user}
             projects={projects}
-          />
-          <div className="sm:col-span-1 md:col-span-8">
+          />}
+          <div className={`sm:col-span-1 ${router.pathname !== '/admin/support' ? 'md:col-span-8' : 'md:col-span-12' }`}>
             {children}
           </div>
         </div>

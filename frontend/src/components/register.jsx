@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { LogoSite } from "@/assets/LogoSite";
 import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
-import { Auth_context } from "@/contexts/auth_context";
+import React, { useState } from "react";
+import { useAuth } from "@/contexts/auth_context";
 import { isMobile } from "react-device-detect";
 import InputMask from 'react-input-mask'
 
@@ -16,7 +16,7 @@ export const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-  const { register } = useContext(Auth_context);
+  const { register } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -49,32 +49,35 @@ model payments {
 }
 
 model cabinets {
-  id         Int        @id @default(autoincrement())
-  user_id    Int
-  user       users      @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  title      String     @unique
-  created_at DateTime   @default(now())
-  supports   supports[]
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  user        users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  title       String   @unique
+  description String
+  created_at  DateTime @default(now())
 }
 
-model supports {
-  id          Int        @id @default(autoincrement())
-  cabinet_id  Int
-  cabinet     cabinets   @relation(fields: [cabinet_id], references: [id], onDelete: Cascade)
-  title       String
-  description String
-  reply_id    Int?
-  parent      supports?  @relation("SupportReplies", fields: [reply_id], references: [id], onDelete: Cascade)
-  replies     supports[] @relation("SupportReplies")
-  status_id   Int
-  status      statuses   @relation(fields: [status_id], references: [id], onDelete: NoAction)
-  created_at  DateTime   @default(now())
+model messages {
+  id            Int             @id @default(autoincrement())
+  content       String
+  sender_id     Int
+  receiver_id   Int
+  has_files     Boolean         @default(false)
+  timestamp     DateTime        @default(now())
+  messagesFiles messagesFiles[]
+}
+
+model messagesFiles {
+  id          Int      @id @default(autoincrement())
+  messages_id Int
+  message     messages @relation(fields: [messages_id], references: [id])
+  filename    String
+  filepath    String
 }
 
 model statuses {
-  id       Int        @id @default(autoincrement())
-  title    String
-  supports supports[]
+  id    Int    @id @default(autoincrement())
+  title String
 }
 
 model tokens {

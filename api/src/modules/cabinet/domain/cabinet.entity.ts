@@ -3,6 +3,7 @@ export class Cabinet {
     public readonly id: number,
     public readonly userId: number,
     public readonly title: string,
+    public readonly description: string,
     public readonly createdAt: Date,
   ) {}
 }

@@ -45,6 +45,9 @@ services:
       npx prisma generate &&
       yarn start:prod
       "
+    volumes:
+      - ./api:/app
+      - /app/node_modules
     depends_on:
       - maindb
     env_file:
@@ -102,3 +105,5 @@ services:
     restart: always
     depends_on:
       - api
+    environment:
+      - NODE_ENV=development

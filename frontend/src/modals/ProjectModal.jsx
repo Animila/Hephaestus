@@ -3,20 +3,24 @@ import React, { useEffect, useState } from "react";
 
 const ProjectModal = ({ isOpen, onClose, onSubmit, project }) => {
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     if (project) {
       setTitle(project.title);
+      setDescription(project.description);
     } else {
       setTitle('');
+      setDescription('');
     }
   }, [project]);
 
   if (!isOpen) return null;
 
   const handleSubmit = () => {
-    onSubmit(title, project ? project.id : null);
+    onSubmit(title, description, project ? project.id : null);
     setTitle('');
+    setDescription('');
     onClose();
   };
 
@@ -30,6 +34,13 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project }) => {
           onChange={(e) => setTitle(e.target.value)}
           className="w-full p-2 border border-gray-300 rounded mb-4"
           placeholder="Название проекта"
+        />
+        <textarea
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
+          placeholder="Описание"
         />
         <div className="flex justify-between">
           <button

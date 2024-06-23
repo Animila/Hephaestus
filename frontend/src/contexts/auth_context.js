@@ -1,7 +1,8 @@
 // contexts/AuthContext.js
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { AuthService } from "@/services/AuthService";
+import { ChatContext } from "@/contexts/chat_context";
 
 export const Auth_context = createContext();
 
@@ -78,3 +79,5 @@ export const AuthProvider = ({ children }) => {
     </Auth_context.Provider>
   );
 };
+export const useAuth = () => useContext(Auth_context);
+

@@ -8,8 +8,8 @@ export class CabinetController {
   constructor(private readonly cabinetService: CabinetService) {}
 
   @Post()
-  create(@Request() req, @Body() body: { user_id: string, title: string }) {
-    return this.cabinetService.create(parseInt(body.user_id), body.title);
+  create(@Request() req, @Body() body: { user_id: string, title: string, description: string }) {
+    return this.cabinetService.create(parseInt(body.user_id), body.title, body.description);
   }
 
   @Get()
@@ -23,8 +23,8 @@ export class CabinetController {
   }
 
   @Put(':id')
-  update(@Request() req, @Param('id') id: string, @Body() body: { title: string }) {
-    return this.cabinetService.update(+id, req.user.id, body.title);
+  update(@Request() req, @Param('id') id: string, @Body() body: { title: string, description: string }) {
+    return this.cabinetService.update(+id, req.user.id, body.title, body.description);
   }
 
   @Delete(':id')

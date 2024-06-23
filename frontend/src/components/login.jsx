@@ -1,13 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Link from 'next/link';
 import { LogoSite } from "@/assets/LogoSite";
 import { useRouter } from "next/router";
-import { Auth_context } from "@/contexts/auth_context";
+import { useAuth } from "@/contexts/auth_context";
 import { isMobile } from "react-device-detect";
 
 export const Login = () => {
   const [email, setEmail] = useState('');
-  const { login } = useContext(Auth_context);
+  const { login } = useAuth();
   const router = useRouter();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);

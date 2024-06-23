@@ -1,10 +1,10 @@
-import { Auth_context } from "@/contexts/auth_context";
+import { useAuth } from "@/contexts/auth_context";
 import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Login } from "@/components/login";
 
 export default function LoginPage() {
-  const { checkAuth } = useContext(Auth_context);
+  const { checkAuth } = useAuth();
   const router = useRouter();
 
   useEffect(() => {

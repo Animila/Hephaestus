@@ -21,10 +21,11 @@ export class CabinetService {
     })
   }
 
-  static async create(title, user_id, token) {
+  static async create(title,description, user_id, token) {
     return api.post('/cabinet', {
       title,
-      user_id
+      user_id,
+      description
     }, {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -32,9 +33,10 @@ export class CabinetService {
     })
   }
 
-  static async update(title, project_id, token) {
+  static async update(title,description, project_id, token) {
     return api.put(`/cabinet/${project_id}`, {
-      title
+      title,
+      description
     }, {
       headers: {
         'Authorization': `Bearer ${token}`

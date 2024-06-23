@@ -1,16 +1,13 @@
 import { Inter } from "next/font/google";
-import React, { useContext } from "react";
-import Image from "next/image";
+import React from "react";
 import { LogoSite } from "@/assets/LogoSite";
-import Link from "next/link";
-import { Auth_context } from "@/contexts/auth_context";
+import { useAuth } from "@/contexts/auth_context";
 import { useRouter } from "next/router";
-import { isMobile } from "react-device-detect";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { isAuthenticated } = useContext(Auth_context);
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
 
   const handleTryFreeClick = () => {

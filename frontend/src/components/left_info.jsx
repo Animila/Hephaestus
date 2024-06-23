@@ -3,8 +3,7 @@ export const LeftInfo = ({setUserModalOpen, projects, user}) => {
 
     <div className='bg-white rounded-[20px] px-[14px] py-[10px]'>
       <div className='flex items-center justify-between h-[100px]'>
-        <span className='text-[30px] font-medium'>{user.first_name} {user.last_name}</span>
-        {/*<Premium />*/}
+        <span className='text-[30px] font-medium'>{user.first_name}{' '}{user.last_name}</span>
       </div>
       <button
         className='flex text-blue justify-center items-center py-[18px] w-full bg-[#E1E0EC] rounded-[10px] leading-[100%] tracking-[-3%] text-[16px]'
@@ -29,15 +28,6 @@ export const LeftInfo = ({setUserModalOpen, projects, user}) => {
         <p className='text-blue text-[20px] font-medium'
            style={{ overflowWrap: 'anywhere' }}>{new Date(user.created_at).toLocaleDateString() + ' ' + new Date(user.created_at).toLocaleTimeString()}</p>
       </div>
-      {/*<div className="col-span-4 bg-white rounded-[15px] p-[20px] flex flex-col justify-between">*/}
-      {/*  <div className='flex justify-between items-center'>*/}
-      {/*    <span>Тариф</span>*/}
-      {/*    /!*{user.role.title === 'Администратор' && <Premium />}*!/*/}
-      {/*  </div>*/}
-      {/*  <div className='text-blue text-[20px] font-medium' style={{ overflowWrap: 'anywhere' }}>*/}
-      {/*    /!*{user.role.title !== 'Пользователь' ? user.role.title : 'Новичок'}*!/*/}
-      {/*  </div>*/}
-      {/*</div>*/}
     </div>
   </div>
 }

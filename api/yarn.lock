@@ -1552,19 +1552,9 @@ amqp-connection-manager@^4.1.14:
   dependencies:
     promise-breaker "^6.0.0"
 
-amqplib@^0.10.3:
+amqplib@^0.10.3, amqplib@^0.10.4:
   version "0.10.4"
   resolved "https://registry.npmjs.org/amqplib/-/amqplib-0.10.4.tgz"
-  integrity sha512-DMZ4eCEjAVdX1II2TfIUpJhfKAuoCeDIo/YyETbfAqehHTXxxs7WOOd+N1Xxr4cKhx12y23zk8/os98FxlZHrw==
-  dependencies:
-    "@acuminous/bitsyntax" "^0.1.2"
-    buffer-more-ints "~1.0.0"
-    readable-stream "1.x >=1.1.9"
-    url-parse "~1.5.10"
-
-amqplib@^0.10.4:
-  version "0.10.4"
-  resolved "https://registry.yarnpkg.com/amqplib/-/amqplib-0.10.4.tgz#4058c775830c908267dc198969015e0e8d280e70"
   integrity sha512-DMZ4eCEjAVdX1II2TfIUpJhfKAuoCeDIo/YyETbfAqehHTXxxs7WOOd+N1Xxr4cKhx12y23zk8/os98FxlZHrw==
   dependencies:
     "@acuminous/bitsyntax" "^0.1.2"
@@ -5464,6 +5454,7 @@ word-wrap@^1.2.5:
   integrity sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
