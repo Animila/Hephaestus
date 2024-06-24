@@ -1,13 +1,13 @@
 import { Inter } from "next/font/google";
-import React from "react";
+import React, { useContext } from "react";
 import { LogoSite } from "@/assets/LogoSite";
-import { useAuth } from "@/contexts/auth_context";
+import { Auth_context } from "@/contexts/auth_context";
 import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useContext(Auth_context);
   const router = useRouter();
 
   const handleTryFreeClick = () => {
